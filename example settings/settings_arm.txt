@@ -1,0 +1,7 @@
+Button,Pelvis,Torso,L_thigh,L_shank,L_foot,R_thigh,R_shank,R_foot,L_bicep,L_forearm,L_hand,R_bicep,R_forearm,R_hand,
+1,0,2b,9,9,9,9,9,9,9,9,9,3,3b,4,
+30
+online
+demo
+360
+calibrate

@@ -5,3 +5,4 @@ offline
 demo
 360
 calibrate
+ISM330DHCX

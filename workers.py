@@ -43,10 +43,12 @@ def readIMU(q, b, fake_online_data, init_time, signals_per_sensor, save_dir_init
             elif cnt == 2:
                 rate = float(line)
                 print("Rate:",rate)
-            elif cnt == 6:
+            elif cnt == 7:
                 cal_word = line.strip()
                 if cal_word == 'calibrate': # calibrate IMUs at start
                     calibrate_sensors = True
+            elif cnt == 6: 
+                sensor_name = line.strip()                    
             elif cnt == 3:
                 cal_word = line.strip()
                 if cal_word == 'parallel': # run with extra thread multiprocessing
@@ -73,7 +75,16 @@ def readIMU(q, b, fake_online_data, init_time, signals_per_sensor, save_dir_init
         f.close()
 
     if not fake_real_time:
-        from adafruit_lsm6ds import ISM330DHCT, Rate, AccelRange, GyroRange
+        from adafruit_lsm6ds import Rate, AccelRange, GyroRange
+        if sensor_name == 'ISM330DHCX':
+            from adafruit_lsm6ds import ISM330DHCT as Sensor
+        elif sensor_name == 'LSM6DS33':
+            from adafruit_lsm6ds import LSM6DS33 as Sensor
+        elif sensor_name == 'LSM6DS032':
+            from adafruit_lsm6ds import LSM6DSOX as Sensor
+        else:
+            print("An unknown IMU has been specified, please add the text to specify the ISM330DHCX, LSM6DS33, or LSM6DS032 to the second to last line of the settings file (the line before calibrate).")
+        
         import adafruit_tca9548a
         import board
         import busio
@@ -108,9 +119,9 @@ def readIMU(q, b, fake_online_data, init_time, signals_per_sensor, save_dir_init
         if s_ind != 9:
             if not fake_real_time:
                 if alt_address_list[i]: # if true use alternate address
-                    s = ISM330DHCT(tca[s_ind], address=const(0x6B))
+                    s = Sensor(tca[s_ind], address=const(0x6B))
                 else:
-                    s = ISM330DHCT(tca[s_ind])
+                    s = Sensor(tca[s_ind])
                 sensor_list.append(s)
             sensor_ind_list.append(s_ind)
             len_sensor_list = len(sensor_ind_list)

@@ -79,7 +79,7 @@ def readIMU(q, b, fake_online_data, init_time, signals_per_sensor, save_dir_init
         if sensor_name == 'ISM330DHCX':
             from adafruit_lsm6ds import ISM330DHCT as Sensor
         elif sensor_name == 'LSM6DS33':
-            from adafruit_lsm6ds.lsm6ds33 import LSM6DS33 as Sensor
+            from adafruit_lsm6ds import LSM6DS33 as Sensor
         elif sensor_name == 'LSM6DS032':
             from adafruit_lsm6ds import LSM6DSOX as Sensor
         else:
